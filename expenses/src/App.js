@@ -1,5 +1,5 @@
 /* import logo from './logo.svg'; */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
@@ -31,8 +31,11 @@ const App = () => {
 
   const addExpenseHandler = (expense) => {
     setExpenses((previousExpenses) => {
-      return [expense, ...expenses];
+      return [expense, ...previousExpenses];
     })
+
+    console.log('In App.js');
+    console.log(expense);
   }
   return (
     <div className="App">
