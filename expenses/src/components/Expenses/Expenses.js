@@ -1,27 +1,28 @@
+import React, {useState} from 'react';
 import './Expenses.css';
-import ExpenseItem from './ExpenseItem';
 import Card from '../UI/Card';
+import ExpensesFilter from './ExpensesFilter';
+import ExpenseList from './ExpensesList';
 
 const Expenses = (props) => {
+  const {expenses} = props;
 
-    const expenses = [{
-        id: 'e1',
-        date: new Date(2024, 10, 28),
-        title: 'Book',
-        price: 30.99,
-      },
-      {
-        id: 'e2',
-        date: new Date(2023, 10, 28),
-        title: 'New Jeans',
-        price: 99.99,
-      }
-      ];
+    const [filteredYear, setFilteredYear] = useState('2023');
+    const filterChangeHandler = (selectedYear) => {
+        setFilteredYear(selectedYear);
+        console.log('Valitud aasta on:', selectedYear);
+    }
+
+    const filteredExpenses = expenses.filter((expense) => {
+        return expense.date.getFullYear().toString() === filteredYear;
+    });
+
+
     return (
-        <Card className="expenses">
-                <ExpenseItem ExpenseData={expenses[0]}/>
-                <ExpenseItem ExpenseData={expenses[1]}/>
-        </Card>
+            <Card className="expenses">
+                <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
+                <ExpenseList expenses={filteredExpenses}/>
+            </Card>
   );
 };
 
